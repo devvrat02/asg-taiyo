@@ -32,6 +32,7 @@ const Charts = () => {
   
   
   useEffect(() => {
+  
     const countries = countries_data?.map((country:any) => ({
       name: country.country,
       value: country.countryInfo.iso2,

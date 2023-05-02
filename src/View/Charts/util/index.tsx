@@ -40,7 +40,7 @@ export const prettyPrintStat = (stat:any) =>
 // Draw circles on MAP with interactive tooltip
 export const showDataOnMap = (data:any, casesType:string='cases')=>{
     console.log(casesType)
-    return data.map((country:any) => (
+    return data?.map((country:any) => (
             <Circle
                 center={[country.countryInfo.lat, country.countryInfo.long]}
                 >
