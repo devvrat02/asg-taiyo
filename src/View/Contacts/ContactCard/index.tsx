@@ -23,6 +23,7 @@ function ContactCard({id='',firstname='',lastname='',Status='',editf=false,updat
       const formsubmit=(e:any)=>{
         if(!update){
             dispatch(adduser(e))
+            setcontact(false)
         }else{
             console.log(id)
             dispatch(edituser({...e,id:id}))
@@ -34,7 +35,7 @@ function ContactCard({id='',firstname='',lastname='',Status='',editf=false,updat
       }
 
     return (  
-        <div className='flex flex-row w-full bg-white p-4 border-1 w-full brd-card'>
+        <div className='flex flex-row w-full bg-white p-4 border-1 brd-card  shadow-xl rounded-lg'>
             <div className="flex flex-col bg-white-900  " >
                 <div className='flex flex-row my-3 '>
                   <div className='mr-4'>
@@ -49,7 +50,7 @@ function ContactCard({id='',firstname='',lastname='',Status='',editf=false,updat
                              required: true,
                             }}
                             render={({ field }) =>(
-                                <input className='in-field rounded pl-2' 
+                                <input className='cursor-pointer  border-1 border-slate-900 bg-slate-100 rounded-lg pl-2' 
                                     id={field.name}
                                     value={field.value}
                                     onChange={field.onChange}
@@ -70,7 +71,7 @@ function ContactCard({id='',firstname='',lastname='',Status='',editf=false,updat
                                     required: true,
                                  }}
                             render={({ field }) =>(
-                                <input className=' border-1 in-field rounded pl-2' 
+                                <input className='cursor-pointer border-1 border-slate-400 bg-slate-100 rounded-lg pl-2' 
                                     id={field.name}
                                     value={field.value}
                                     onChange={field.onChange}
@@ -95,7 +96,7 @@ function ContactCard({id='',firstname='',lastname='',Status='',editf=false,updat
                                     required: true,
                                 }}
                                 render={({ field }) =>(
-                                    <input className='' 
+                                    <input className='cursor-pointer' 
                                     id={field.name}
                                     name={field.name}
                                     type='radio'
@@ -115,7 +116,7 @@ function ContactCard({id='',firstname='',lastname='',Status='',editf=false,updat
                                     required: true,
                                 }}
                                 render={({ field }) =>(
-                                    <input className='' 
+                                    <input className='cursor-pointer' 
                                     id={field.name}
                                     name={field.name}
                                     type='radio'
@@ -131,18 +132,18 @@ function ContactCard({id='',firstname='',lastname='',Status='',editf=false,updat
                     </div>
                    {edit&&<div className='flex flex-row justify-center mt-2'>
                         <div className='flex justify-center mt-2 mr-2'>
-                            <div className='text-white rounded-lg p-1 h-8 bg-blue-500 w-30' onClick={handleSubmit(formsubmit)}>Save&nbsp;Contact</div>
+                            <div className='text-white rounded-sm p-1 h-8 bg-blue-500 w-30 cursor-pointer' onClick={handleSubmit(formsubmit)}>Save&nbsp;Contact</div>
                         </div>
                         <div className='flex justify-center mt-2'>
-                            <div className='text-white rounded-lg p-1 h-8 bg-yellow-500 w-30' onClick={()=>{setcontact(false);setedit(false)}}>Cancel</div>
+                            <div className='text-white rounded-sm p-1 h-8 bg-yellow-500 w-30 cursor-pointer' onClick={()=>{setcontact(false);setedit(false)}}>Cancel</div>
                         </div>
                     </div>}
                     {!edit&&<div className='flex flex-row justify-center mt-2'>
                         <div className='flex justify-center mt-2 mr-2'>
-                            <div className='text-white rounded-lg p-1 h-8 bg-blue-500 w-30' onClick={()=>setedit(true)}>Edit&nbsp;Number</div>
+                            <div className='text-white rounded-sm p-1 h-8 bg-blue-500 w-30 cursor-pointer' onClick={()=>setedit(true)}>Edit&nbsp;Number</div>
                         </div>
                         <div className='flex justify-center mt-2'>
-                            <div className='text-white rounded-lg p-1 h-8 bg-red-500 w-30' onClick={ondelete}>Delete</div>
+                            <div className='text-white rounded-sm p-1 h-8 bg-red-500 w-30 cursor-pointer' onClick={ondelete}>Delete</div>
                         </div>
                     </div>}
                 </div>

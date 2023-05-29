@@ -10,15 +10,18 @@ function Contacts() {
             <div>
                 Contact List
             </div>
+            <div className="flex flex-col justify-center items-center">
 
-            <div className="flex justify-center items-center">
-                {contact&&<ContactCard setcontact={setcontact} editf={true}/>}
+                <div className="flex justify-center items-center m-auto">
+                    {contact&&<ContactCard setcontact={setcontact} editf={true}/>}
+                </div>
+                <div className="">
+                    {!contact&&<div className="w-full bg-blue-500 p-2 m-2 flex justify-center items-center rounded text-white cursor-pointer" onClick={()=>setcontact(true)}>
+                        Create Contact
+                    </div>}
+                </div>
             </div>
-            <div className="">
-                {!contact&&<div className="w-full bg-blue-500 p-2 m-2 flex justify-center items-center rounded text-white" onClick={()=>setcontact(true)}>
-                    Create Contact
-                </div>}
-            </div>
+
             <div className="grid md:grid-cols-2 lg:grid-cols-3">
                 {users.length>0&&users.map((user,index)=>{
                     return(

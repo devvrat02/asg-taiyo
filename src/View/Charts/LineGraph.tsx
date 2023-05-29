@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from "react";
 import {Line} from "react-chartjs-2";
 import numeral from "numeral";
+import { useQuery } from "@tanstack/react-query";
+import { countryhistory } from "../../api";
+import Loader from "../loader";
 
 const options = {
+  responsive: true,
   legend: {
-    display: false,
+    display: true,
+    position: 'top' as const,
   },
   elements: {
     point: {
       radius: 0,
     },
   },
-  maintainAspectRatio: false,
+  maintainAspectRatio: true,
   tooltips: {
     mode: "index",
     intersect: false,
     callbacks: {
-      label: function (tooltipItem:any, data:any) {
+      label: function (tooltipItem:any) {
         return numeral(tooltipItem.value).format("+0,0");
       },
     },
@@ -36,8 +41,9 @@ const options = {
         gridLines: {
           display: false,
         },
+        
         ticks: {
-          // Include a dollar sign in the ticks
+          beginAtZero: true,
           callback: function (value:any) {return numeral(value).format("0a");
           },
         },
@@ -46,11 +52,10 @@ const options = {
   },
 };
 
-console.log(options)
 const buildChartData = (data:any, casesType:any) => {
   let chartData = [];
   let lastDataPoint;
-  for (let date in data.cases) {
+  for (let date in data?.cases) {
     if (lastDataPoint) {
       let newDataPoint = {
         x: date,
@@ -60,42 +65,68 @@ const buildChartData = (data:any, casesType:any) => {
     }
     lastDataPoint = data[casesType][date];
   }
-  // console.log(chartData)
   return chartData;
 };
 
-function LineGraph({ casesType }:any) {
+function LineGraph({ casesType,country }:any) {
   const [data, setData] = useState([]);
-  // console.log(casesType)
-  useEffect(() => {
-    const fetchData = async () => {
-      await fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=all")
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          let chartData:any = buildChartData(data, casesType);
-          setData(chartData);
-          // console.log(chartData);
-        
-        });
-    };
+  const [data1, setData1] = useState([]);
+  const [data2, setData2] = useState([]);
+  const {data: country_dt,isLoading:load}:any=useQuery({queryKey: ['countrygraph',country], queryFn:()=>countryhistory(country)})
 
-    fetchData();
-  }, [casesType]);
+  useEffect(() => {
+    // console.log(country_dt)
+          if(country==='worldwide'&&country_dt){
+            let chartData:any = buildChartData(country_dt, `cases`);
+            let chartData1:any = buildChartData(country_dt, `recovered`);
+            let chartData2:any = buildChartData(country_dt, `deaths`);
+            setData(chartData);
+            setData1(chartData1)
+            setData2(chartData2)
+          }
+          else{
+            let chartData:any = buildChartData(country_dt?.timeline, `cases`);
+            let chartData1:any = buildChartData(country_dt?.timeline, `recovered`);
+            let chartData2:any = buildChartData(country_dt?.timeline, `deaths`);
+            setData(chartData);
+            setData1(chartData1)
+            setData2(chartData2)
+          }
+  }, [country,country_dt]);
 
   return (
     <div>
+        <div className="">
+          {load&&<Loader/>}
+        </div>
       {data?.length > 0 && (
         <Line
+          type={`bar`}
           data={{
             datasets: [
               {
-                backgroundColor: "rgba(204, 16, 52, 0.5)",
+                label: 'Coronavirus Cases',
+                type: 'line' as const,
+                backgroundColor: "#CC1034",
                 borderColor: "#CC1034",
                 data: data,
               },
+              {
+                label: 'Recovered',
+                type: 'line' as const,
+                backgroundColor: "#7DD71D",
+                borderColor: "#7DD71D",
+                data: data1,
+              },
+              {
+                label: 'Deaths',
+                type: 'line' as const,
+                backgroundColor: "#FB4443",
+                borderColor: "#FB4443",
+                data: data2,
+              },
             ],
+            
           }}
           options={options}
         />

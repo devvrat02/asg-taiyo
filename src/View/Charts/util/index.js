@@ -2,7 +2,7 @@ import React from "react";
 import numeral from "numeral";
 import { Circle, Popup } from "react-leaflet";
 
-export const caseTypeColors:any = {
+export const caseTypeColors = {
     cases:{
         hex: "#CC1034",
         rgb: "rgb(204,16,52)",
@@ -23,32 +23,33 @@ export const caseTypeColors:any = {
     },
 };
 
-export const sortData = (data:[]) => {
+export const sortData = (data) => {
     if(!data){return []}
 
     const sortedData = [...data];
 
-    return sortedData.sort((a:any, b:any)=> (a.cases>b.cases ? -1 : 1));
+    return sortedData.sort((a, b)=> (a.cases>b.cases ? -1 : 1));
 };
 
 // show the new cases added count pretty
-export const prettyPrintStat = (stat:any) =>
+export const prettyPrintStat = (stat) =>
     stat ? `+${numeral(stat).format("0.0a")}` : "+0";
 
 
 
 // Draw circles on MAP with interactive tooltip
-export const showDataOnMap = (data:any, casesType:string='cases')=>{
-    console.log(casesType)
-    return data?.map((country:any) => (
+export const showDataOnMap = (data, casesType,color)=>{
+    return data?.map((country) => (
             <Circle
                 center={[country.countryInfo.lat, country.countryInfo.long]}
+                // color={color}
+                // fillColor={color}
+                fillOpacity={0.4}
+                radius={Math.sqrt(country[casesType]) * caseTypeColors[casesType].multiplier}
                 >
                 <Popup>
-                    {/* <h1> I M A PopUp</h1> */}
                     <div className="info-container">
-                        <div className="info-flag" style={{backgroundImage: `url(${country.countryInfo.flag})`}}
-                        />
+                        <div className="info-flag" style={{backgroundImage: `url(${country.countryInfo.flag})`}}/>
                         <div className="info-name">{country.country}</div>
                         <div className="info-confirmed">Cases: {numeral(country.cases).format("0,0")}</div>
                         <div className="info-recovered">Recovered: {numeral(country.recovered).format("0,0")}</div>
