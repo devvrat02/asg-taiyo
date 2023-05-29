@@ -60,11 +60,11 @@ const buildChartData = (data:any, casesType:any) => {
     if (lastDataPoint) {
       let newDataPoint = {
         x: date,
-        y: data[casesType][date] - lastDataPoint,
+        y: Math.abs(data[casesType][date] - lastDataPoint),
       };
       chartData.push(newDataPoint);
     }
-    lastDataPoint = data[casesType][date];
+    lastDataPoint = Math.abs(data[casesType][date]);
   }
   return chartData;
 };
