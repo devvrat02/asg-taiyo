@@ -1,10 +1,13 @@
 In this application there are two functionality 1. Covid Statistics 2. Contacts Library
+Node.js is required for running the application
 
 step 1: 
+For installing the package
 ### `npm i`
 ### `yarn install`
 
 step 2:
+Starting the server
 ### `npm start`
 ### `yarn start`
 Runs the app in the development mode.\
