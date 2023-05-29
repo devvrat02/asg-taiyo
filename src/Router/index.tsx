@@ -5,12 +5,14 @@ import Sidebar from '../View/Sidebar';
 import { useState } from 'react';
 import {ReactComponent as Nav} from '../View/images/nav.svg'
 
+// routing page Navigation to other page
 function Router() {
+  // sidebar showing state
   const [viewside,setviewside]=useState(true)
     return ( 
     <BrowserRouter>
         <div className='flex'>
-          <div className='fixed top-5 left-5' onClick={()=>{setviewside(true)}}>
+          <div className='fixed top-5 left-5 cursor-pointer' onClick={()=>{setviewside(true)}}>
             <Nav/>
           </div>
           <div>

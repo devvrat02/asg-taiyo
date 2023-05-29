@@ -9,28 +9,35 @@ function ContactCard({id='',firstname='',lastname='',Status='',editf=false,updat
         lastname:string,
         Status:string
     }
+    // setting default values in contact Form
     const defaultValues={
         firstname:firstname,
         lastname:lastname,
         Status:Status
     }
+    // Setting Form is editable
     const [edit,setedit]=useState(editf)
+    
+    // Declaring form Hook
     const {
         control,
         handleSubmit,
       } = useForm<FormData>({defaultValues})
 
+    // onForm Submit
       const formsubmit=(e:any)=>{
+        // Checking form is open in which mode like editable=update,add 
         if(!update){
             dispatch(adduser(e))
             setcontact(false)
         }else{
-            console.log(id)
+            // console.log(id)
             dispatch(edituser({...e,id:id}))
         }
         setedit(false)
       }
       const ondelete=()=>{
+        // deleting the user in the array by calling redux function.
         dispatch(deluser(id))
       }
 

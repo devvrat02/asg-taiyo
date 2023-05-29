@@ -11,11 +11,14 @@ function ChangeView({ center, zoom }:any) {
 }
 
 function Map({ countries, casesType, center, zoom }:any) {
+  // Leaflet map 
   return (
     <div className="map">
       <LeafletMap>
        <ChangeView center={center} zoom={zoom} /> 
+       {/* tile layer user for showing map */}
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      {/* showdataonmap use for circle and popup data */}
         {showDataOnMap(countries, casesType,casesType==='cases'?`#CC1034`:casesType==='recovered'?`#7DD71D`:`#FB4443`)}
       </LeafletMap>
     </div>

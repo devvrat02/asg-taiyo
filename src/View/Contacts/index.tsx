@@ -3,7 +3,9 @@ import ContactCard from "./ContactCard";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 function Contacts() {
+    // for showing contact form
     const [contact,setcontact]=useState(false)
+    // fetching users from redux store
     const {users}=useSelector((state:RootState)=>{return state.contacts})
     return ( 
         <div className="flex justify-center items-center w-full flex-col" >

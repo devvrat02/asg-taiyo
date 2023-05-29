@@ -4,7 +4,7 @@ import numeral from "numeral";
 import { useQuery } from "@tanstack/react-query";
 import { countryhistory } from "../../api";
 import Loader from "../loader";
-
+// setting up properties for graph 
 const options = {
   responsive: true,
   legend: {
@@ -52,6 +52,7 @@ const options = {
   },
 };
 
+// sorting /arranging the covid data 
 const buildChartData = (data:any, casesType:any) => {
   let chartData = [];
   let lastDataPoint;
@@ -69,12 +70,14 @@ const buildChartData = (data:any, casesType:any) => {
 };
 
 function LineGraph({ casesType,country }:any) {
-  const [data, setData] = useState([]);
-  const [data1, setData1] = useState([]);
-  const [data2, setData2] = useState([]);
+  const [data, setData] = useState([]);// for cases
+  const [data1, setData1] = useState([]);// for recovered
+  const [data2, setData2] = useState([]);// for deaths
+  // react query fetching the data 
   const {data: country_dt,isLoading:load}:any=useQuery({queryKey: ['countrygraph',country], queryFn:()=>countryhistory(country)})
 
   useEffect(() => {
+    // on data change modifying the data according to requirement
     // console.log(country_dt)
           if(country==='worldwide'&&country_dt){
             let chartData:any = buildChartData(country_dt, `cases`);

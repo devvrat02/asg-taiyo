@@ -1,7 +1,7 @@
 import React from "react";
 import numeral from "numeral";
 import { Circle, Popup } from "react-leaflet";
-
+// setting the type and there colors for map and graph
 export const caseTypeColors = {
     cases:{
         hex: "#CC1034",
@@ -22,7 +22,7 @@ export const caseTypeColors = {
         multiplier: 20,
     },
 };
-
+// sorting the data
 export const sortData = (data) => {
     if(!data){return []}
 
@@ -31,13 +31,13 @@ export const sortData = (data) => {
     return sortedData.sort((a, b)=> (a.cases>b.cases ? -1 : 1));
 };
 
-// show the new cases added count pretty
+// show the new cases added count pretty means formating the txt
 export const prettyPrintStat = (stat) =>
     stat ? `+${numeral(stat).format("0.0a")}` : "+0";
 
 
 
-// Draw circles on MAP with interactive tooltip
+// Draw circles on MAP with interactive tooltip 
 export const showDataOnMap = (data, casesType,color)=>{
     return data?.map((country) => (
             <Circle
@@ -56,7 +56,6 @@ export const showDataOnMap = (data, casesType,color)=>{
                         <div className="info-deaths">Deaths: {numeral(country.deaths).format("0,0")}</div>
                     </div>
                 </Popup>
-    
             </Circle>
         )
 

@@ -4,10 +4,11 @@ import "./InfoBox.css";
 
 function InfoBox({ title, cases, total, active, isRed, ...props }:any) {
   // console.log(title, active);
+  // top card used for showing sumup details
   return (
     <Card
       onClick={props.onClick}
-      className={`infoBox ${active && "infoBox--selected"} ${
+      className={`infoBox cursor-pointer ${active && "infoBox--selected"} ${
         isRed && "infoBox--red"
       }`}
     >

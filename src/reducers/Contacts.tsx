@@ -4,7 +4,7 @@ type contact={
       lastname:string,
       Status:string
     } 
-
+// Setting type of Userstate.
 interface Userstate {
   users:contact[],
 }
@@ -16,14 +16,17 @@ export const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
   reducers: {
+    // add the value of contact in array
     adduser:(state,action)=>{
       let data=action.payload
       state.users.push(data)
     },
+    // edit the value of contact in array
     edituser:(state,action)=>{
       let id=action.payload.id
       state.users[id]={...action.payload}   
     },
+    // delete the contact in array
     deluser:(state,action)=>{
       let id=action.payload
       state.users.splice(id,1) 

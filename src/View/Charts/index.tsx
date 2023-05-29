@@ -16,22 +16,24 @@ import { coviddata,countriesdata,countrydata } from "../../api";
 import Loader from "../loader";
 
 const Charts = () => {
-  const [country, setInputCountry] = useState("worldwide");
-  const [countryInfo, setCountryInfo] = useState({todayCases:0,cases:0,todayRecovered:0,recovered:0,todayDeaths:0,deaths:0});
-  const [countries, setCountries] = useState([]);
-  const [mapCountries, setMapCountries] = useState([]);
-  const [casesType, setCasesType] = useState("cases");
-  const [mapCenter, setMapCenter] = useState([34.80746, -40.4796]);
-  const [mapZoom, setMapZoom] = useState(5);
-  const {data: all_covid_data,isLoading:aload}=useQuery({queryKey: ['alldata'], queryFn:coviddata})
-  const {data: countries_data,isLoading:bload}=useQuery({queryKey: ['countriesdata'], queryFn:countriesdata})
+  const [country, setInputCountry] = useState("worldwide");//setting country code 
+  const [countryInfo, setCountryInfo] = useState({todayCases:0,cases:0,todayRecovered:0,recovered:0,todayDeaths:0,deaths:0});//covid default value
+  const [countries, setCountries] = useState([]); //Countries list
+  const [mapCountries, setMapCountries] = useState([]);//countries that going to show in map
+  const [casesType, setCasesType] = useState("cases"); //Type of case
+  const [mapCenter, setMapCenter] = useState([34.80746, -40.4796]); //position of map changing the axis wrt to country
+  const [mapZoom, setMapZoom] = useState(5); //zoom the map
+  // query used for fetching the data worldwide covid data, countries list, country details 
+  const {data: all_covid_data,isLoading:aload}:any=useQuery({queryKey: ['alldata'], queryFn:coviddata})
+  const {data: countries_data,isLoading:bload}:any=useQuery({queryKey: ['countriesdata'], queryFn:countriesdata})
   const {data: country_data,isLoading:cload}:any=useQuery({queryKey: ['countrydata',country], queryFn:()=>countrydata(country)})
-  const [loading,setload]=useState(false);
+  const [loading,setload]=useState(false);//loader
   useEffect(()=>{
     setload(aload||bload||cload);
-  },[aload,bload,cload])  
+  },[aload,bload,cload])  //if any api is loading the loader will visible
 
   useEffect(() => {
+    // modifying state for the map, and top cards
       const countries = countries_data?.map((country:any) => ({name: country.country,value: country.countryInfo.iso2}));
       setCountries(countries);
       setMapCountries(countries_data);
@@ -47,6 +49,7 @@ const Charts = () => {
   },[countries_data,country,all_covid_data,country_data])
 
   useEffect(()=>{
+    // modifying state for the map, and top cards and setting country info
       setCountryInfo(country_data);
       if(country_data?.countryInfo?.lat&& country_data?.countryInfo?.long){
         setMapCenter([country_data?.countryInfo?.lat, country_data?.countryInfo?.long]);
@@ -59,7 +62,7 @@ const Charts = () => {
       }
   },[all_covid_data,country_data,country])
 
-
+// for dropdown value change
   const onCountryChange = async (e:any) => {
     const countryCode = e.target.value;
     setInputCountry(countryCode);

@@ -1,8 +1,11 @@
 import { useNavigate } from "react-router-dom";
 
 function Sidebar({setviewside}:any) {
+    // side nav page List
     const routes=[
         {
+            // label that going to visible in front
+            // route is nav location.
             label:'Contacts',
             key:'/'
         },
@@ -11,6 +14,7 @@ function Sidebar({setviewside}:any) {
             key:'/charts'
         },
     ]
+    // used foe navigate to other routes
     const navigate=useNavigate();
     return ( 
        <div className='sidepanel fixed z-40'  style={{height:"100vh", background:"#fff"}} >
